@@ -18,9 +18,9 @@ class CreatePetsTable extends Migration
             $table->string("nome");
             $table->string("descricao");
             $table->integer("ong_id");
-            $table->integer("limite_de_candidatos");
+            $table->integer("limite_de_candidatos")->nullable();
             $table->boolean("disponivel");
-            $table->date("data_adocao");
+            $table->date("data_adocao")->nullable();
             $table->timestamps();
 
             $table->foreign("ong_id")->references("id")->on("ongs")->onDelete("cascade");
