@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Pet extends Model
 {
     use HasFactory;
+
+    public function ong() {
+        return $this->belongsTo("\App\Models\Ong");
+    }
 }
