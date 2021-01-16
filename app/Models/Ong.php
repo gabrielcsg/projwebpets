@@ -18,4 +18,8 @@ class Ong extends Model
     public function donations() {
         return $this->hasMany("\App\Models\Donation");
     }
+
+    public function endereco() {
+        return $this->belongsTo("\App\Models\Endereco");
+    }
 }
