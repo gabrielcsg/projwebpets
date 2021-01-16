@@ -9,6 +9,15 @@ class Pet extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'nome',
+        'descricao',
+        'ong_id',
+        'limite_candidatos',
+        'disponivel',
+        'data_adocao'
+    ];
+
     public function ong() {
         return $this->belongsTo("\App\Models\Ong");
     }

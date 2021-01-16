@@ -9,6 +9,8 @@ class Ong extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['nome_fantasia'];
+
     public function pets() {
         return $this->hasMany("\App\Models\Pet");
     }
