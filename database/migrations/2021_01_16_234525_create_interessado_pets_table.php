@@ -13,12 +13,14 @@ class CreateInteressadoPetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('interessado_pets', function (Blueprint $table) {
+        Schema::create('interessados_pets', function (Blueprint $table) {
             $table->id();
-            $table->date("data_interesse");
-            $table->integer("id_interessado");
-            $table->integer("id_pet");
+            $table->integer("interessado_id");
+            $table->integer("pet_id");
             $table->timestamps();
+
+            $table->foreign("interessado_id")->references("id")->on("interessados");
+            $table->foreign("pet_id")->references("id")->on("pets");
         });
     }
 
