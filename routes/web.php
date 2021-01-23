@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\OngController;
+use App\Http\Controllers\PetListController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Ongs
+Route::get('/ongs', [OngController::class, 'listAll']);
+
+Route::get('/ongs/cadastro', [OngController::class, 'insert']);
+Route::post('/ongs/cadastro', [OngController::class, 'insert']);
+
+Route::get('/ongs/remover/{id}', [OngController::class, 'remove']);
+
