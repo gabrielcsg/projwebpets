@@ -17,9 +17,16 @@ class OngController extends Controller
         if ($request->method() == 'GET') {
             return view('formOng');
         }
+        try {
+            \App\Validator\OngValidator::validate($request->all());
 
-        Ong::create($request->all());
-        return redirect('/ongs');
+            $data = $request->all();
+            Ong::create($data);
+
+            return redirect('/ongs');
+        } catch (\App\Validator\ValidationException $exception) {
+            return redirect('/ongs/cadastro')->withErrors($exception->getValidator())->withInput();
+        }
     }
 
     public function remove($id) {
