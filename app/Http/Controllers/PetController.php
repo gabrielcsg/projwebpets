@@ -20,17 +20,23 @@ class PetController extends Controller
             $ongs = \App\Models\Ong::all();
             return view('formPet', ['ongs' => $ongs]);
         }
-        $dados = $request->all();
 
-        Pet::create([
-            "nome" => $dados['nome'],
-            "descricao" => $dados['descricao'],
-            "ong_id" => $dados['ong_id'],
-            "limite_de_candidatos" => $dados['limite_de_candidatos'],
-            "disponivel" => true,
-        ]);
+        try {
+            \App\Validator\PetValidator::validate($request->all());
+            $dados = $request->all();
 
-        return redirect('/pets');
+            Pet::create([
+                "nome" => $dados['nome'],
+                "descricao" => $dados['descricao'],
+                "ong_id" => $dados['ong_id'],
+                "limite_de_candidatos" => $dados['limite_de_candidatos'],
+                "disponivel" => true,
+            ]);
+
+            return redirect('/pets');
+        } catch (\App\Validator\ValidationException $exception) {
+            return redirect('/pets/cadastro')->withErrors($exception->getValidator())->withInput();
+        }
     }
 
     public function remove($id)
