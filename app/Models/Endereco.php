@@ -9,6 +9,8 @@ class Endereco extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['cep', 'logradouro', 'numero', 'bairro', 'cidade', 'estado'];
+
     public static $rules = [
         'cep' => 'required',
         'logradouro' => 'required',

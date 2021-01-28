@@ -14,6 +14,6 @@ class InteressadoSeeder extends Seeder
      */
     public function run()
     {
-    	Interessado::factory(10)->create();
+    	#Interessado::factory(10)->create();
     }
 }

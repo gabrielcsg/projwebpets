@@ -9,6 +9,8 @@ class Interessado extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['nome', 'data_nascimento', 'telefone'];
+
     public static $rules = [
         'nome' => 'required|min:3|max:100',
         'data_nascimento' => 'required',
@@ -20,7 +22,7 @@ class Interessado extends Model
         'data_nascimento.required' => 'A data de nascimento é obrigatória',
         'telefone.required' => 'O telefone é obrigatório',
     ];
-    
+
     public function endereco(){
     	return $this->belongsTo("\App\Models\Endereco");
     }
