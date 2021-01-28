@@ -12,7 +12,12 @@
     <div class="container containerForm">
         <form method="post" action="/ongs/cadastro">
             @csrf
-            Name Fantasia: <input type="text" name="nome_fantasia" required />
+            Nome Fantasia: <input id="nome_fantasia" type="text" name="nome_fantasia" value="{{ old('nome_fantasia') }}" required autofocus />
+            @error('nome_fantasia')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+            @enderror
             <button type="submit">Confirmar</button>
             <a href="/ongs">Cancel</a>
         </form>
