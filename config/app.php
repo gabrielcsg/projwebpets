@@ -106,8 +106,8 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
-	#'faker_locale' => 'pt_BR'
+    #'faker_locale' => 'en_US',
+	'faker_locale' => 'pt_BR',
 	
     /*
     |--------------------------------------------------------------------------
