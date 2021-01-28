@@ -31,6 +31,6 @@ class CreateInteressadoPetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('interessado_pets');
+        Schema::dropIfExists('interessados_pets');
     }
 }
