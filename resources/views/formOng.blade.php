@@ -1,27 +1,19 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+@extends('auth.register')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Ong</title>
-</head>
+@section('formulario')
+    <input id="tipo" type="hidden" name="tipo" value="ong">
 
-<body>
-    <h1 align="center" style="margin-top: 50px;">Cadastro de Ong</h1>
-    <div class="container containerForm">
-        <form method="post" action="/ongs/cadastro">
-            @csrf
-            Nome Fantasia: <input id="nome_fantasia" type="text" name="nome_fantasia" value="{{ old('nome_fantasia') }}" required autofocus />
+    <div class="form-group row">
+        <label for="nome_fantasia" class="col-md-4 col-form-label text-md-right">{{ __('Nome Fantasia') }}</label>
+
+        <div class="col-md-6">
+            <input id="nome_fantasia" type="text" class="form-control @error('nome_fantasia') is-invalid @enderror" name="nome_fantasia" value="{{ old('nome_fantasia') }}" required autocomplete="nome_fantasia" autofocus>
+
             @error('nome_fantasia')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
             @enderror
-            <button type="submit">Confirmar</button>
-            <a href="/ongs">Cancel</a>
-        </form>
+        </div>
     </div>
-</body>
-
-</html>
+@endsection
