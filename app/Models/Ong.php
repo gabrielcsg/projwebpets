@@ -11,7 +11,8 @@ class Ong extends Model
 
     protected $fillable = [
         'nome_fantasia',
-        'user_id'
+        'user_id',
+        'endereco_id'
     ];
 
     public static $rules = ['nome_fantasia' => 'required|min:2|max:100'];
@@ -32,7 +33,7 @@ class Ong extends Model
     {
         return $this->belongsTo("\App\Models\Endereco");
     }
-    
+
     public function user() {
         return $this->belongsTo('\App\Models\User');
     }
