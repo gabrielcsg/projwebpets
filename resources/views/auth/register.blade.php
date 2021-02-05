@@ -61,13 +61,6 @@
                             </div>
                         </div>
                         
-                        <br>
-                        <select name="tipo" id="tipo">
-                                <option value="ong">ONG</option>
-                                <option value="interessado">Interessado</option>
-                        </select>
-                        <br> <br>
-                        
                         @yield('formulario')
 
                         <div class="form-group row mb-0">

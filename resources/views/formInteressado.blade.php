@@ -1,5 +1,10 @@
 @extends('auth.register')
 @section('formulario')
+
+@if ($tipo == 'interessado')
+    <input id="tipo" type="hidden" name="tipo" value="interessado">
+@endif
+
 <div class="form-group row">
     <label for="nome" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }}</label>
 
