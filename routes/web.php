@@ -49,3 +49,7 @@ Route::get('/enderecos', [EnderecoController::class, 'listAll']);
 Route::get('/enderecos/cadastro', [EnderecoController::class, 'insert']);
 Route::post('/enderecos/cadastro', [EnderecoController::class, 'create']);
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

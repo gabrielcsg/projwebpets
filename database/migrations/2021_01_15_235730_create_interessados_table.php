@@ -16,12 +16,15 @@ class CreateInteressadosTable extends Migration
         Schema::create('interessados', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
-            $table->string('data_nascimento');
+            $table->date('data_nascimento');
             $table->string('telefone');
             $table->integer('endereco_id')->nullable();
             $table->timestamps();
 
             $table->foreign('endereco_id')->references('id')->on('enderecos');
+
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

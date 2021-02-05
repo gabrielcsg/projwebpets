@@ -9,7 +9,12 @@ class Interessado extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nome', 'data_nascimento', 'telefone'];
+    protected $fillable = [
+        'nome', 
+        'data_nascimento', 
+        'telefone',
+        'user_id'
+    ];
 
     public static $rules = [
         'nome' => 'required|min:3|max:100',
@@ -25,5 +30,9 @@ class Interessado extends Model
 
     public function endereco(){
     	return $this->belongsTo("\App\Models\Endereco");
+    }
+    
+    public function user() {
+        return $this->belongsTo('\App\Models\User');
     }
 }

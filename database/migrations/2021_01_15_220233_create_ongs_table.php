@@ -17,6 +17,8 @@ class CreateOngsTable extends Migration
             $table->id();
             $table->string('nome_fantasia');
             $table->timestamps();
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

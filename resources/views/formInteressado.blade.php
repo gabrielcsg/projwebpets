@@ -1,26 +1,63 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+@extends('auth.register')
+@section('formulario')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de usuário</title>
-</head>
+<input id="tipo" type="hidden" name="tipo" value="interessado">
 
-<body>
-    <h1 align="center" style="margin-top: 50px;">Cadastro de usuário</h1>
-    <div class="container containerForm" align="center">
-        <form method="post" action="/interessados/cadastro">
-            @csrf
-            Nome: <input type="text" name="nome" required /> <br>
-            Data de nascimento: <input type="text" name="data_nascimento" required /> <br>
-            Telefone: <input type="text" name="telefone" required /> <br>
-            Endereco_id: <input id="endereco_id" type="text" name="endereco_id" required />
-			
-            <button type="submit">Confirmar</button>
-            <a href="/interessados">Cancel</a>
-        </form>
+<div class="form-group row">
+    <label for="nome" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }}</label>
+
+    <div class="col-md-6">
+        <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ old('nome') }}" required autocomplete="nome" autofocus>
+
+        @error('nome')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
-</body>
+</div>
 
-</html>
+<div class="form-group row">
+    <label for="data_nascimento" class="col-md-4 col-form-label text-md-right">{{ __('Data de nascimento') }}</label>
+
+    <div class="col-md-6">
+        <input id="data_nascimento" type="date" class="form-control @error('data_nascimento') is-invalid @enderror" name="data_nascimento" value="{{ old('data_nascimento') }}" required autocomplete="data_nascimento" autofocus>
+
+        @error('data_nascimento')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="telefone" class="col-md-4 col-form-label text-md-right">{{ __('Telefone') }}</label>
+
+    <div class="col-md-6">
+        <input id="telefone" type="text" class="form-control @error('telefone') is-invalid @enderror" name="telefone" value="{{ old('telefone') }}" required autocomplete="telefone" autofocus>
+
+        @error('telefone')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="endereco_id" class="col-md-4 col-form-label text-md-right">{{ __('Endereço') }}</label>
+
+    <div class="col-md-6">
+        <input id="endereco_id" type="text" class="form-control @error('endereco_id') is-invalid @enderror" name="endereco_id" value="{{ old('endereco_id') }}" autocomplete="endereco_id">
+
+        @error('endereco_id')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+    </div>
+</div>
+@endsection
+
+
