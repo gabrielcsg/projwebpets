@@ -22,6 +22,9 @@ class CreateInteressadosTable extends Migration
             $table->timestamps();
 
             $table->foreign('endereco_id')->references('id')->on('enderecos');
+            
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
