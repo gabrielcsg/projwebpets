@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Ong;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -12,57 +13,28 @@ use App\Models\Interessado;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
 
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'tipo' => ['required'],
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
+
     protected function create(array $data)
     {
         $user = User::create([
@@ -71,17 +43,28 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'tipo' => $data['tipo']
         ]);
-        
-        if ($user->tipo == 'interessado'){
-            Interessado::create([
+
+        if ($user->tipo == 'interessado') {
+            $data_interessado = [
                 'nome' => $data['nome'],
                 'data_nascimento' => $data['data_nascimento'],
                 'telefone' => $data['telefone'],
                 'endereco_id' => $data['endereco_id'],
-                'user_id' => $user->id   
-            ]);
-        } 
-        
+                'user_id' => $user->id
+            ];
+            \App\Validator\InteressadoValidator::validate($data_interessado);
+            Interessado::create($data_interessado);
+        } else if ($user->tipo == 'ong') {
+            $data_ong = [
+                'nome_fantasia' => $data['nome_fantasia'],
+                'endereco_id' => $data['endereco_id'],
+                'user_id' => $user->id,
+            ];
+            \App\Validator\OngValidator::validate($data_ong);
+            Ong::create($data_ong);
+        }
+
         return $user;
+
     }
 }

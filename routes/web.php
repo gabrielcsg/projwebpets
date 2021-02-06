@@ -21,7 +21,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 // Ongs
 Route::get('/ongs', [OngController::class, 'listAll']);
 
-Route::get('/ongs/cadastro', [OngController::class, 'insert']);
+Route::get('/ongs/cadastro', [OngController::class, 'insert'])->name('cadastro_ong');
 Route::post('/ongs/cadastro', [OngController::class, 'insert']);
 
 Route::get('/ongs/remover/{id}', [OngController::class, 'remove']);
@@ -35,13 +35,12 @@ Route::post('/pets/cadastro', [PetController::class, 'insert']);
 Route::get('/pets/remove/{id}', [PetController::class, 'remove']);
 
 // Interessados
-Route::get('/interessados', [InteressadoController::class, 'listAll']);
+//Route::get('/interessados', [InteressadoController::class, 'listAll']);
 
-Route::get('/interessados/cadastro', [InteressadoController::class, 'insert']);
 Route::post('/interessados/cadastro', [InteressadoController::class, 'create']);
 
 // Enderecos
-Route::get('/enderecos', [EnderecoController::class, 'listAll']);
+//Route::get('/enderecos', [EnderecoController::class, 'listAll']);
 
 Route::get('/enderecos/cadastro', [EnderecoController::class, 'insert']);
 Route::post('/enderecos/cadastro', [EnderecoController::class, 'create']);
@@ -49,4 +48,5 @@ Route::post('/enderecos/cadastro', [EnderecoController::class, 'create']);
 
 Auth::routes();
 
+Route::get('/register', [InteressadoController::class, 'insert'])->name('register');
 
