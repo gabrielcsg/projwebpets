@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Interessado;
+use App\Models\Ong;
 
 class RegisterController extends Controller
 {
@@ -80,7 +81,12 @@ class RegisterController extends Controller
                 'endereco_id' => $data['endereco_id'],
                 'user_id' => $user->id   
             ]);
-        } 
+        } else {
+            Ong::create([
+                'nome_fantasia' => $data['nome_fantasia'],
+                'user_id' => $user->id
+            ]);
+        }
         
         return $user;
     }
