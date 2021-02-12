@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Ong;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Interessado;
+use App\Models\Ong;
 
 class RegisterController extends Controller
 {
@@ -57,7 +57,6 @@ class RegisterController extends Controller
         } else if ($user->tipo == 'ong') {
             $data_ong = [
                 'nome_fantasia' => $data['nome_fantasia'],
-                'endereco_id' => $data['endereco_id'],
                 'user_id' => $user->id,
             ];
             \App\Validator\OngValidator::validate($data_ong);
@@ -65,6 +64,5 @@ class RegisterController extends Controller
         }
 
         return $user;
-
     }
 }
