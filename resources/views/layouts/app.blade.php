@@ -59,7 +59,7 @@
                         @else
                         @if (Auth::user()->tipo == 'ong')
                         <li class="nav-item">
-                            <a class="nav-link" href="/pets/cadastro">{{ __('Cadastrar Pets') }}</a>
+                            <a class="nav-link" href="/pets">{{ __('Gerenciar Pets') }}</a>
                         </li>
                         @endif
                         <li class="nav-item dropdown">
@@ -87,6 +87,14 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+
+
+        <footer class="footer mt-auto py-5 bg-light">
+            <div class="container">
+                @yield('footer')
+            </div>
+        </footer>
     </div>
 </body>
 
