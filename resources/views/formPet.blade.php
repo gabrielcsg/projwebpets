@@ -43,7 +43,7 @@
                             <label for="limite_de_candidatos" class="col-md-4 col-form-label text-md-right">{{ __('Limite de Candidatos') }}</label>
 
                             <div class="col-md-6">
-                                <input id="limite_de_candidatos" type="number" min="0" class="form-control @error('limite_de_candidatos') is-invalid @enderror" name="limite_de_candidatos" value="{{ old('limite_de_candidatos') }}" required autocomplete="limite_de_candidatos" autofocus>
+                                <input id="limite_de_candidatos" type="number" min="0" class="form-control @error('limite_de_candidatos') is-invalid @enderror" name="limite_de_candidatos" value="{{ old('limite_de_candidatos') }}" autocomplete="limite_de_candidatos" autofocus>
 
                                 @error('limite_de_candidatos')
                                 <span class="invalid-feedback" role="alert">
