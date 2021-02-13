@@ -16,6 +16,10 @@
             flex-direction: column;
             justify-content: space-between;
         }
+
+        .btn-full-witdh {
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -33,7 +37,7 @@
                                            required/>
                                 </div>
                                 <div class="col-2 col-sm-2">
-                                    <button class="btn btn-primary" type="submit">Buscar</button>
+                                    <button class="btn btn-primary btn-full-witdh" type="submit">Buscar</button>
                                 </div>
                             </div>
                         </form>
