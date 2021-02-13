@@ -78,3 +78,9 @@
         </div>
     </div>
 @endsection
+
+
+@section('footer')
+    <span class="text-muted">&#169; Desenvolvido por WebPets, 2021. </span>
+@endsection
+
