@@ -4,6 +4,7 @@ use App\Http\Controllers\OngController;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\InteressadoController;
 use App\Http\Controllers\EnderecoController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
