@@ -1,24 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pets</title>
+    <style>
+        li {
+            list-style: none;
+        }
+
+        .card-dogs {
+            height: 200px;
+            width: 300px;
+            max-width: 300px;
+            max-height: 200px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    </style>
 </head>
 
-<body>
-    <h1 align="center">Pets Cadastrados</h1>
-    <a href="/pets/cadastro">Cadastrar novo PET</a>
-    <ul>
-        @foreach ($pets as $pet)
-        <li>
-            <p>{{ $pet->nome }} - {{ $pet->descricao }}</p>
-            <p>Disponivel: {{ $pet->disponivel ? 'SIM' : 'NÃO' }} | Ong: {{ $pet->ong->nome_fantasia}}</p>
-            <a href="/pets/remove/{{$pet->id}}">Excluir</a>
-        </li>
-        @endforeach
-    </ul>
-</body>
 
-</html>
+@section('content')
+<div class="container">
+    <div class="row justify-content-between">
+        <h2>Pets Cadastrados</h2>
+        <a class="btn btn-outline-primary" href="/pets/cadastro">Cadastrar novo PET</a>
+    </div>
+</div>
+<div class="album py-5 bg-light">
+    <div class="container">
+        <ul>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                @foreach ($pets as $pet)
+                @if($pet->disponivel)
+                <li>
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <div class="card-body card-dogs">
+                                <p class="card-title font-weight-bold">{{ $pet->nome }}</p>
+                                <p class="card-text">{{ $pet->descricao }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                            Editar
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                            Candidatos
+                                        </button>
+                                    </div>
+                                    <small class="text-muted">
+                                        <a href="/pets/remove/{{ $pet->id }}">Remover</a>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                @endif
+                @endforeach
+            </div>
+        </ul>
+    </div>
+    @endsection

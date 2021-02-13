@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pet;
+use App\Validator\PetValidator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PetController extends Controller
 {
@@ -17,13 +19,16 @@ class PetController extends Controller
     public function insert(Request $request)
     {
         if ($request->method() == 'GET') {
-            $ongs = \App\Models\Ong::all();
-            return view('formPet', ['ongs' => $ongs]);
+            return view('formPet');
         }
 
         try {
-            \App\Validator\PetValidator::validate($request->all());
+            $ong = Auth::user()->ong;
+
             $dados = $request->all();
+            $dados['ong_id'] = $ong->id;
+
+            PetValidator::validate($dados);
 
             Pet::create([
                 "nome" => $dados['nome'],

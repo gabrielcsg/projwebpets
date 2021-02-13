@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Validator\InteressadoValidator;
+use App\Validator\OngValidator;
 use App\Models\Interessado;
 use App\Models\Ong;
 
@@ -46,20 +48,19 @@ class RegisterController extends Controller
 
         if ($user->tipo == 'interessado') {
             $data_interessado = [
-                'nome' => $data['nome'],
+                'nome' => $data['name'],
                 'data_nascimento' => $data['data_nascimento'],
                 'telefone' => $data['telefone'],
-                'endereco_id' => $data['endereco_id'],
                 'user_id' => $user->id
             ];
-            \App\Validator\InteressadoValidator::validate($data_interessado);
+            InteressadoValidator::validate($data_interessado);
             Interessado::create($data_interessado);
         } else if ($user->tipo == 'ong') {
             $data_ong = [
                 'nome_fantasia' => $data['nome_fantasia'],
                 'user_id' => $user->id,
             ];
-            \App\Validator\OngValidator::validate($data_ong);
+            OngValidator::validate($data_ong);
             Ong::create($data_ong);
         }
 
