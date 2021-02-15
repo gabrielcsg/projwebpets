@@ -11,7 +11,8 @@ class PetController extends Controller
 {
     public function listAll()
     {
-        $pets = Pet::all();
+        $ong = Auth::user()->ong;
+        $pets = Pet::where('ong_id', '=', $ong->id)->get();
 
         return view('listPets', ['pets' => $pets]);
     }
