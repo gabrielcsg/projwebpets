@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Endereco;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -12,6 +13,7 @@ use App\Validator\InteressadoValidator;
 use App\Validator\OngValidator;
 use App\Models\Interessado;
 use App\Models\Ong;
+use App\Validator\EnderecoValidator;
 
 class RegisterController extends Controller
 {
@@ -46,12 +48,25 @@ class RegisterController extends Controller
             'tipo' => $data['tipo']
         ]);
 
+        $data_endereco = [
+            'cep'=> $data['cep'],
+            'logradouro'=> $data['logradouro'],
+            'numero'=> $data['numero'],
+            'bairro'=> $data['bairro'],
+            'cidade'=> $data['cidade'],
+            'estado'=> $data['estado'],
+        ];
+
+        EnderecoValidator::validate($data_endereco);
+        $endereco = Endereco::create($data_endereco);
+
         if ($user->tipo == 'interessado') {
             $data_interessado = [
                 'nome' => $data['name'],
                 'data_nascimento' => $data['data_nascimento'],
                 'telefone' => $data['telefone'],
-                'user_id' => $user->id
+                'user_id' => $user->id,
+                'endereco_id' => $endereco->id
             ];
             InteressadoValidator::validate($data_interessado);
             Interessado::create($data_interessado);
@@ -59,6 +74,7 @@ class RegisterController extends Controller
             $data_ong = [
                 'nome_fantasia' => $data['nome_fantasia'],
                 'user_id' => $user->id,
+                'endereco_id' => $endereco->id,
             ];
             OngValidator::validate($data_ong);
             Ong::create($data_ong);
