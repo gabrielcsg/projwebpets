@@ -41,13 +41,15 @@
                                 <p class="card-text">{{ $pet->descricao }}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                        <a href="/pets/editar/{{$pet->id}}" class="btn btn-sm btn-outline-secondary">
                                             Editar
-                                        </button>
+                                        </a>
+
                                         <button type="button" class="btn btn-sm btn-outline-secondary">
                                             Candidatos
                                         </button>
                                     </div>
+
                                     <small class="text-muted">
                                         <a href="/pets/remove/{{ $pet->id }}">Remover</a>
                                     </small>

@@ -26,6 +26,9 @@ Route::post('/pets/cadastro', [PetController::class, 'insert']);
 
 Route::get('/pets/remove/{id}', [PetController::class, 'remove']);
 
+Route::get('/pets/editar/{id}', [PetController::class, 'update']);
+Route::post('/pets/editar/{id}', [PetController::class, 'update']);
+
 // Interessados
 //Route::get('/interessados', [InteressadoController::class, 'listAll']);
 
