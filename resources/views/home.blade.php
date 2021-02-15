@@ -4,6 +4,7 @@
     <style>
         li {
             list-style: none;
+            margin-top: 10px;
         }
 
         .card-dogs {
