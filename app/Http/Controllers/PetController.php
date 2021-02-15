@@ -11,7 +11,8 @@ class PetController extends Controller
 {
     public function listAll()
     {
-        $pets = Pet::all();
+        $ong = Auth::user()->ong;
+        $pets = Pet::where('ong_id', '=', $ong->id)->get();
 
         return view('listPets', ['pets' => $pets]);
     }
@@ -49,5 +50,28 @@ class PetController extends Controller
         $pet = Pet::find($id);
         $pet->delete();
         return redirect('/pets');
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+
+            if ($request->method() == 'GET') {
+                $pet = Pet::find($id);
+                return view('pets/formEditPet', ['pet' => $pet]);
+            }
+            
+            PetValidator::validate($request->all());
+            $petAtualizado = Pet::find($id);
+            $petAtualizado->nome = $request['nome'];
+            $petAtualizado->descricao = $request['descricao'];
+            $petAtualizado->limite_de_candidatos = $request['limite_de_candidatos'];
+
+            $petAtualizado->update();
+
+            return redirect('/pets');
+        } catch (\App\Validator\ValidationException $exception) {
+            return redirect('/pets/editar/' . $id)->withErrors($exception->getValidator())->withInput();
+        }
     }
 }
