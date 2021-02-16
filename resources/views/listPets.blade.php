@@ -16,6 +16,20 @@
             <p>{{ $pet->nome }} - {{ $pet->descricao }}</p>
             <p>Disponivel: {{ $pet->disponivel ? 'SIM' : 'NÃO' }} | Ong: {{ $pet->ong->nome_fantasia}}</p>
             <a href="/pets/remove/{{$pet->id}}">Excluir</a>
+            @if ($pet->disponivel) 
+                | <a href="/pets/candidatar/{{$pet->id}}">Me interesso</a>
+            @endif
+        </li>
+        @endforeach
+    </ul>
+    
+    <h1 align="center">Pets que me interessei</h1>
+    <ul>
+        @foreach ($petsInteressados as $pet)
+        <li>
+            <p>{{ $pet->nome }} - {{ $pet->descricao }}</p>
+            <p>Disponivel: {{ $pet->disponivel ? 'SIM' : 'NÃO' }} | Ong: {{ $pet->ong->nome_fantasia}}</p>
+            <a href="/pets/retirarInteresse/{{$pet->id}}">Remover</a>
         </li>
         @endforeach
     </ul>

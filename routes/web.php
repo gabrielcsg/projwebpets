@@ -37,6 +37,10 @@ Route::post('/pets/cadastro', [PetController::class, 'insert']);
 
 Route::get('/pets/remove/{id}', [PetController::class, 'remove']);
 
+// Interesse em um Pet 
+Route::get('/pets/candidatar/{id}', [PetController::class, 'candidatar']);
+Route::get('/pets/retirarInteresse/{id}', [PetController::class, 'retirarInteresse']);
+
 // Interessados
 Route::get('/interessados', [InteressadoController::class, 'listAll']);
 
