@@ -14,6 +14,7 @@ use App\Validator\OngValidator;
 use App\Models\Interessado;
 use App\Models\Ong;
 use App\Validator\EnderecoValidator;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -40,6 +41,9 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
+        DB::beginTransaction();
+        $success = false;
+
         $user = User::create([
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -47,12 +51,12 @@ class RegisterController extends Controller
         ]);
 
         $data_endereco = [
-            'cep'=> $data['cep'],
-            'logradouro'=> $data['logradouro'],
-            'numero'=> $data['numero'],
-            'bairro'=> $data['bairro'],
-            'cidade'=> $data['cidade'],
-            'estado'=> $data['estado'],
+            'cep' => $data['cep'],
+            'logradouro' => $data['logradouro'],
+            'numero' => $data['numero'],
+            'bairro' => $data['bairro'],
+            'cidade' => $data['cidade'],
+            'estado' => $data['estado'],
         ];
 
         EnderecoValidator::validate($data_endereco);
@@ -68,6 +72,7 @@ class RegisterController extends Controller
             ];
             InteressadoValidator::validate($data_interessado);
             Interessado::create($data_interessado);
+            $success = true;
         } else if ($user->tipo == 'ong') {
             $data_ong = [
                 'nome_fantasia' => $data['nome_fantasia'],
@@ -76,8 +81,15 @@ class RegisterController extends Controller
             ];
             OngValidator::validate($data_ong);
             Ong::create($data_ong);
+            $success = true;
         }
 
-        return $user;
+        if ($success) {
+            DB::commit();
+            return $user;
+        }
+
+        DB::rollBack();
+        return null;
     }
 }
