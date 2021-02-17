@@ -3,91 +3,93 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Endereco;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Validator\InteressadoValidator;
+use App\Validator\OngValidator;
 use App\Models\Interessado;
 use App\Models\Ong;
+use App\Validator\EnderecoValidator;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
 
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'tipo' => ['required'],
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
+
     protected function create(array $data)
     {
+        DB::beginTransaction();
+        $success = false;
+
         $user = User::create([
-            'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'tipo' => $data['tipo']
         ]);
-        
-        if ($user->tipo == 'interessado'){
-            Interessado::create([
+
+        $data_endereco = [
+            'cep' => $data['cep'],
+            'logradouro' => $data['logradouro'],
+            'numero' => $data['numero'],
+            'bairro' => $data['bairro'],
+            'cidade' => $data['cidade'],
+            'estado' => $data['estado'],
+        ];
+
+        EnderecoValidator::validate($data_endereco);
+        $endereco = Endereco::create($data_endereco);
+
+        if ($user->tipo == 'interessado') {
+            $data_interessado = [
                 'nome' => $data['nome'],
                 'data_nascimento' => $data['data_nascimento'],
                 'telefone' => $data['telefone'],
-                'endereco_id' => $data['endereco_id'],
-                'user_id' => $user->id   
-            ]);
-        } else {
-            Ong::create([
+                'user_id' => $user->id,
+                'endereco_id' => $endereco->id
+            ];
+            InteressadoValidator::validate($data_interessado);
+            Interessado::create($data_interessado);
+            $success = true;
+        } else if ($user->tipo == 'ong') {
+            $data_ong = [
                 'nome_fantasia' => $data['nome_fantasia'],
-                'user_id' => $user->id
-            ]);
+                'user_id' => $user->id,
+                'endereco_id' => $endereco->id,
+            ];
+            OngValidator::validate($data_ong);
+            Ong::create($data_ong);
+            $success = true;
         }
-        
-        return $user;
+
+        if ($success) {
+            DB::commit();
+            return $user;
+        }
+
+        DB::rollBack();
+        return null;
     }
 }
