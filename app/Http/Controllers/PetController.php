@@ -3,18 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pet;
-use App\Validator\PetValidator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Validator\PetValidator;
 use Illuminate\Support\Facades\Auth;
 
 class PetController extends Controller
 {
-    public function listAll()
+    public function listByInteressado()
     {
+
+        $pets = Pet::all();
+        // buscando o interessado associado ao usuario
+        $interessado = Auth::user()->interessado;
+
+        // lista dos pets que se tem interesse
+        $petsIds = DB::select("select distinct pet_id from interessados_pets where interessado_id=" . strval($interessado->id) . ";");
+        
+        $petsInteressados = array();
+        foreach ($pets as $pet) {
+            foreach ($petsIds as $petId) {
+                if ($pet->id == intval($petId->pet_id)) {
+                    array_push($petsInteressados, $pet);
+                }
+            }
+        }
+
+        return view('listPetsInteressado', ['pets' => $petsInteressados]);
+    }
+
+    public function listByOng() {
         $ong = Auth::user()->ong;
         $pets = Pet::where('ong_id', '=', $ong->id)->get();
-
-        return view('listPets', ['pets' => $pets]);
+        return view('listPetsOng', ['pets' => $pets]);
     }
 
     public function insert(Request $request)
@@ -52,6 +73,32 @@ class PetController extends Controller
         return redirect('/pets');
     }
 
+    public function candidatar($pet_id)
+    {
+        // somente se for tipo interessado
+        if (Auth::user()->tipo == 'interessado') {
+            // buscando o interessado associado ao usuario
+            $interessado = Auth::user()->interessado;
+
+            // salvando na  tabela a relacao de interesse
+            DB::table('interessados_pets')->insert([
+                'interessado_id' => $interessado->id,
+                'pet_id' => $pet_id
+            ]);
+        }
+
+        return redirect('/interesses');
+    }
+
+    public function retirarInteresse($pet_id)
+    {
+        $interessado = Auth::user()->interessado;
+
+        DB::statement("delete from interessados_pets where pet_id=" . strval($pet_id) . " and  interessado_id=" . strval($interessado->id));
+
+        return redirect('/interesses');
+    }
+
     public function update(Request $request, $id)
     {
         try {
@@ -60,7 +107,7 @@ class PetController extends Controller
                 $pet = Pet::find($id);
                 return view('pets/formEditPet', ['pet' => $pet]);
             }
-            
+
             PetValidator::validate($request->all());
             $petAtualizado = Pet::find($id);
             $petAtualizado->nome = $request['nome'];

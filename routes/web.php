@@ -19,12 +19,18 @@ Route::post('/ongs/cadastro', [OngController::class, 'insert']);
 Route::get('/ongs/remover/{id}', [OngController::class, 'remove']);
 
 // Pets
-Route::get('/pets', [PetController::class, 'listAll']);
+Route::get('/pets', [PetController::class, 'listByOng']);
 
 Route::get('/pets/cadastro', [PetController::class, 'insert']);
 Route::post('/pets/cadastro', [PetController::class, 'insert']);
 
 Route::get('/pets/remove/{id}', [PetController::class, 'remove']);
+
+// Interesse em um Pet
+Route::get('/pets/candidatar/{id}', [PetController::class, 'candidatar']);
+Route::get('/pets/retirarInteresse/{id}', [PetController::class, 'retirarInteresse']);
+Route::get('/interesses', [PetController::class, 'listByInteressado']);
+
 
 Route::get('/pets/editar/{id}', [PetController::class, 'update']);
 Route::post('/pets/editar/{id}', [PetController::class, 'update']);
@@ -44,4 +50,3 @@ Route::post('/enderecos/cadastro', [EnderecoController::class, 'create']);
 Auth::routes();
 
 Route::get('/register', [InteressadoController::class, 'insert'])->name('register');
-
