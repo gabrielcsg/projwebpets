@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use DateTime;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Ong;
 
 class OngSeeder extends Seeder
 {
@@ -15,16 +16,6 @@ class OngSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('ongs')->insert([
-            'nome_fantasia' => 'Pata Amada Garanhuns',
-            'created_at' => new DateTime(),
-            'updated_at' => new DateTime(),
-        ]);
-
-        DB::table('ongs')->insert([
-            'nome_fantasia' => 'Amigos 4 Patas ST',
-            'created_at' => new DateTime(),
-            'updated_at' => new DateTime(),
-        ]);
+        Ong::factory(10)->create();
     }
 }
