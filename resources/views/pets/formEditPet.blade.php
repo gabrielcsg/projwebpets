@@ -54,12 +54,12 @@
                         </div>
 
                         <div class="form-group row justify-content-center">
-                            <div class="col-2">
+                            <div class="col-4 col-sm-2">
                                 <a href="/pets" class="btn btn-outline-secondary">
                                     {{ __('Cancelar') }}
                                 </a>
                             </div>
-                            <div class="col-2">
+                            <div class="col-4 col-sm-2">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Confirmar') }}
                                 </button>
