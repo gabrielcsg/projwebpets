@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <form method="POST" action="/pets/editar/{{$pet->id}}">
                         @csrf
-                        <input type="hidden" name="ong_id" value="{{$pet->ong_id}}"/>
+                        <input type="hidden" name="ong_id" value="{{$pet->ong_id}}" />
                         <div class="form-group row">
                             <label for="nome" class="col-md-4 col-form-label text-md-right">{{ __('Nome') }}</label>
 
@@ -53,8 +53,13 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
+                        <div class="form-group row justify-content-center">
+                            <div class="col-4 col-sm-2">
+                                <a href="/pets" class="btn btn-outline-secondary">
+                                    {{ __('Cancelar') }}
+                                </a>
+                            </div>
+                            <div class="col-4 col-sm-2">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Confirmar') }}
                                 </button>

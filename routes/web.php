@@ -35,6 +35,8 @@ Route::get('/interesses', [PetController::class, 'listByInteressado']);
 Route::get('/pets/editar/{id}', [PetController::class, 'update']);
 Route::post('/pets/editar/{id}', [PetController::class, 'update']);
 
+Route::get('/pets/disponibilidade/{id}', [PetController::class, 'trocarDisponibilidade']);
+
 // Interessados
 //Route::get('/interessados', [InteressadoController::class, 'listAll']);
 
