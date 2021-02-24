@@ -121,4 +121,13 @@ class PetController extends Controller
             return redirect('/pets/editar/' . $id)->withErrors($exception->getValidator())->withInput();
         }
     }
+
+    public function trocarDisponibilidade($id)
+    {
+        $pet = Pet::find($id);
+        $pet->disponivel = !$pet->disponivel;
+        $pet->update();
+
+        return redirect('/pets');
+    }
 }
