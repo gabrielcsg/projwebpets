@@ -54,9 +54,9 @@
                                             Editar
                                         </a>
 
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">
+                                        <a href="/pets/{{$pet->id}}/interessados" class="btn btn-sm btn-outline-secondary">
                                             Candidatos
-                                        </button>
+                                        </a>
                                     </div>
 
                                     <small class="text-muted">
