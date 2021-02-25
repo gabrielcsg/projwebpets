@@ -12,7 +12,7 @@ class OngFactory extends Factory
     public function definition()
     {
         $user = User::create([
-            'email' => $this->faker->email,
+            'email' => $this->faker->companyEmail,
             'password' => $this->faker->password,
             'tipo' => 'ong'
             ]);
