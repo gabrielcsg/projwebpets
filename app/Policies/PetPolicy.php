@@ -36,4 +36,19 @@ class PetPolicy
         return $user->tipo == 'ong' && $user->ong->id == $pet->ong_id;
     }
 
+    public function removerInteresse(User $user, Pet $pet)
+    {
+        if (!($user->tipo == 'interessado')) return false;
+
+        $success = false;
+        $pets = $user->interessado->interesses;
+        foreach($pets as $p) {
+            if ($p->id == $pet->id) {
+                $success = true;
+                break;
+            }
+        }
+        
+        return $success;
+    }
 }

@@ -97,6 +97,9 @@ class PetController extends Controller
     public function retirarInteresse($pet_id)
     {
         $interessado = Auth::user()->interessado;
+        
+        $pet = Pet::find($pet_id);
+        $this->authorize('removerInteresse', $pet);
 
         DB::statement("delete from interessados_pets where pet_id=" . strval($pet_id) . " and  interessado_id=" . strval($interessado->id));
 
