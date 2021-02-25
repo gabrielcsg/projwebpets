@@ -2,6 +2,25 @@
 
 <head>
     <style>
+        .cabecalho {
+            display: flex;
+            align-items: center;
+        }
+
+        .botao-cadastro {
+            width: 100%;
+        }
+
+        @media only screen and (max-width: 767px) {
+            .titulo {
+                text-align: center;
+            }
+
+            .botao-cadastro {
+                margin-top: 20px;
+            }
+        }
+
         li {
             list-style: none;
         }
@@ -60,11 +79,16 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-between">
-        <h2>Pets Cadastrados</h2>
-        <a class="btn btn-outline-primary" href="/pets/cadastro">Cadastrar novo PET</a>
+    <div class="row row-cols-1 row-cols-sm-2 cabecalho">
+        <h2 class="col-12 col-sm-8 col-md-10 titulo">Pets Cadastrados</h2>
+        <div class="col-12 col-sm-4 col-md-2">
+            <a class="btn btn-outline-primary botao-cadastro" href="/pets/cadastro">
+                Cadastrar novo PET
+            </a>
+        </div>
     </div>
 </div>
+
 <div class="album py-5 bg-light">
     <div class="container">
         <ul>
@@ -93,11 +117,11 @@
                                 </div>
                                 <div class="actions-dogs">
                                     <div class="btn-group">
-                                        <a href="/pets/editar/{{$pet->id}}" class="btn btn-sm btn-outline-secondary">
+                                        <a href="/pets/editar/{{$pet->id}}" class="btn btn-sm btn-outline-primary">
                                             Editar
                                         </a>
 
-                                        <a href="/pets/{{$pet->id}}/interessados" class="btn btn-sm btn-outline-secondary">
+                                        <a href="/pets/{{$pet->id}}/interessados" class="btn btn-sm btn-outline-primary">
                                             Candidatos
                                         </a>
                                     </div>
@@ -113,4 +137,6 @@
             </div>
         </ul>
     </div>
-    @endsection
+</div>
+
+@endsection
