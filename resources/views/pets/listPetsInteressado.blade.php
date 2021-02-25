@@ -4,6 +4,7 @@
     <style>
         li {
             list-style: none;
+            margin-top: 10px;
         }
 
         .album .card {
@@ -58,7 +59,7 @@
 <div class="album py-5 bg-light">
     <div class="container">
         <ul>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
                 @foreach ($pets as $pet)
                 @if($pet->disponivel)
                 <li>
