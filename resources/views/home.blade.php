@@ -34,6 +34,16 @@
             width: 150px;
         }
 
+        .cards-dogs .info-dogs {
+            max-height: 100;
+        }
+
+        .card-dogs .info-dogs .card-text {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
         .card-dogs .actions-dogs {
             display: flex;
             justify-content: flex-end;
@@ -86,17 +96,9 @@
                                     <div class="img-dogs">
                                         <img src="https://www.flaticon.com/br/premium-icon/icons/svg/1566/1566744.svg" alt="pet" />
                                     </div>
-                                    <div>
+                                    <div class="info-dogs">
                                         <p class="card-title font-weight-bold">{{ $pet->nome }}</p>
                                         <p class="card-text">{{ $pet->descricao }}</p>
-
-                                        @if($pet->limite_de_candidatos && $pet->limite_de_candidatos > 0)
-                                            <small class="text-muted">
-                                                Ainda restam: {{
-                                                $pet->limite_de_candidatos - count($pet->interessados)
-                                            }} vagas.
-                                            </small>
-                                        @endif
                                     </div>
                                     <div class="actions-dogs">
                                         <div class="btn-group">
