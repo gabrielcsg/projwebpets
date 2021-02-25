@@ -29,7 +29,7 @@ class PetController extends Controller
             }
         }
 
-        return view('listPetsInteressado', ['pets' => $petsInteressados]);
+        return view('pets/listPetsInteressado', ['pets' => $petsInteressados]);
     }
 
     public function listByOng()
@@ -37,14 +37,14 @@ class PetController extends Controller
         $this->authorize('isOng');
         $ong = Auth::user()->ong;
         $pets = Pet::where('ong_id', '=', $ong->id)->get();
-        return view('listPetsOng', ['pets' => $pets]);
+        return view('pets/listPetsOng', ['pets' => $pets]);
     }
 
     public function insert(Request $request)
     {
         $this->authorize('isOng');
         if ($request->method() == 'GET') {
-            return view('formPet');
+            return view('pets/formPet');
         }
 
         try {
