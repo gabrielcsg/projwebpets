@@ -35,6 +35,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/pets/editar/{id}', [PetController::class, 'update']);
     Route::post('/pets/editar/{id}', [PetController::class, 'update']);
 
+    Route::get('/pets/{pet_id}/interessados', [PetController::class, 'listInteressados']);
+
     Route::get('/pets/disponibilidade/{id}', [PetController::class, 'trocarDisponibilidade']);
 
     // Interesse em um Pet

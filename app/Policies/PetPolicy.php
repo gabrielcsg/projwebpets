@@ -42,13 +42,18 @@ class PetPolicy
 
         $success = false;
         $pets = $user->interessado->interesses;
-        foreach($pets as $p) {
+        foreach ($pets as $p) {
             if ($p->id == $pet->id) {
                 $success = true;
                 break;
             }
         }
-        
+
         return $success;
+    }
+
+    public function listarInteressados(User $user, Pet $pet)
+    {
+        return $user->tipo == 'ong' && $user->ong->id == $pet->ong_id;
     }
 }

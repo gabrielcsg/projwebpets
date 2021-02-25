@@ -97,7 +97,7 @@ class PetController extends Controller
     public function retirarInteresse($pet_id)
     {
         $interessado = Auth::user()->interessado;
-        
+
         $pet = Pet::find($pet_id);
         $this->authorize('removerInteresse', $pet);
 
@@ -139,5 +139,17 @@ class PetController extends Controller
         $pet->update();
 
         return redirect('/pets');
+    }
+
+    public function listInteressados($pet_id)
+    {
+        $pet = Pet::find($pet_id);
+        $this->authorize('listarInteressados', $pet);
+        $interessados = $pet->interessados;
+
+        return view('interessados/listInteressadosPet', [
+            'pet' => $pet,
+            'interessados' => $interessados
+        ]);
     }
 }

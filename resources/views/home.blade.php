@@ -60,12 +60,14 @@
                                     <p class="card-text">{{ $pet->descricao }}</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">
+                                            <!-- <button type="button" class="btn btn-sm btn-outline-secondary">
                                                 Detalhes
-                                            </button>
+                                            </button> -->
+                                            @if(!(Auth::user() && Auth::user()->tipo == 'ong'))
                                             <a href="/pets/candidatar/{{$pet->id}}" class="btn btn-sm btn-outline-secondary">
                                                 Candidatar-se
                                             </a>
+                                            @endif
                                         </div>
                                         <small class="text-muted">Limite: {{ $pet->limite_de_candidatos }}</small>
                                     </div>
