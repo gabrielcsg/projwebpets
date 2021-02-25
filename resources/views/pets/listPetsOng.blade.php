@@ -6,15 +6,43 @@
             list-style: none;
         }
 
+        .album .card {
+            width: 300px;
+        }
+
         .card-dogs {
-            height: 200px;
+            height: 400px;
             width: 300px;
             max-width: 300px;
-            max-height: 200px;
 
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+        }
+
+        .card-dogs .img-dogs {
+            height: 150px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-dogs .img-dogs img {
+            height: 150px;
+            width: 150px;
+        }
+
+        .card-dogs .actions-dogs {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .disponibilidade {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
     </style>
 </head>
@@ -34,21 +62,26 @@
                 @foreach ($pets as $pet)
                 <li>
                     <div class="col">
-                        <div class="card shadow-sm">
+                        <div class="card shadow-md">
                             <div class="card-body card-dogs">
-                                <p class="card-title font-weight-bold">{{ $pet->nome }}</p>
-                                <p class="card-text">{{ $pet->descricao }}</p>
-                                <div class="d-flex justify-content-between">
-                                    <small class="text-muted">
-                                        Disponivel: {{$pet->disponivel ? 'SIM' : 'NÃO'}}
-                                    </small>
-                                    <small class="text-muted">
-                                        <a href="/pets/disponibilidade/{{$pet->id}}">
-                                            Trocar Disponibilidade
-                                        </a>
-                                    </small>
+                                <div class="img-dogs">
+                                    <img src="https://www.flaticon.com/br/premium-icon/icons/svg/1566/1566744.svg" alt="pet" />
                                 </div>
-                                <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <p class="card-title font-weight-bold">{{ $pet->nome }}</p>
+                                    <p class="card-text">{{ $pet->descricao }}</p>
+                                    <div class="disponibilidade">
+                                        <small class="text-muted">
+                                            Disponivel: {{$pet->disponivel ? 'SIM' : 'NÃO'}}
+                                        </small>
+                                        <small class="text-muted">
+                                            <a href="/pets/disponibilidade/{{$pet->id}}">
+                                                Trocar
+                                            </a>
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="actions-dogs">
                                     <div class="btn-group">
                                         <a href="/pets/editar/{{$pet->id}}" class="btn btn-sm btn-outline-secondary">
                                             Editar
@@ -58,9 +91,8 @@
                                             Candidatos
                                         </a>
                                     </div>
-
                                     <small class="text-muted">
-                                        <a href="/pets/remove/{{ $pet->id }}">Remover</a>
+                                        <a href="/pets/remove/{{ $pet->id }}">Excluir Pet</a>
                                     </small>
                                 </div>
                             </div>
