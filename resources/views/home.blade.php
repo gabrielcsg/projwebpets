@@ -7,19 +7,46 @@
             margin-top: 10px;
         }
 
+        .album .card {
+            width: 300px;
+        }
+
         .card-dogs {
-            height: 200px;
+            height: 400px;
             width: 300px;
             max-width: 300px;
-            max-height: 200px;
 
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
+        .card-dogs .img-dogs {
+            height: 150px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-dogs .img-dogs img{
+            height: 150px;
+            width: 150px;
+        }
+
+        .card-dogs .actions-dogs {
+            display: flex;
+            justify-content: flex-end;
+        }
+
         .btn-full-witdh {
             width: 100%;
+        }
+
+        @media only screen and (max-width: 767px) {
+            .btn-full-witdh {
+                margin-top: 20px;
+            }
         }
     </style>
 </head>
@@ -33,10 +60,10 @@
                 <div class="card-body">
                     <form action="">
                         <div class="form-group row">
-                            <div class="col-8 col-sm-10">
+                            <div class="col-12 col-md-10">
                                 <input placeholder="Insira algo aqui" type="text" class="form-control" name="algo" required />
                             </div>
-                            <div class="col-2 col-sm-2">
+                            <div class="col-12 col-md-2">
                                 <button class="btn btn-primary btn-full-witdh" type="submit">Buscar</button>
                             </div>
                         </div>
@@ -49,27 +76,39 @@
     <div class="album py-5 bg-light">
         <div class="container">
             <ul>
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3">
                     @foreach ($pets as $pet)
                     @if($pet->disponivel)
                     <li>
                         <div class="col">
-                            <div class="card shadow-sm">
+                            <div class="card shadow-md">
                                 <div class="card-body card-dogs">
-                                    <p class="card-title font-weight-bold">{{ $pet->nome }}</p>
-                                    <p class="card-text">{{ $pet->descricao }}</p>
-                                    <div class="d-flex justify-content-between align-items-center">
+                                    <div class="img-dogs">
+                                        <img src="https://www.flaticon.com/br/premium-icon/icons/svg/1566/1566744.svg" alt="pet" />
+                                    </div>
+                                    <div>
+                                        <p class="card-title font-weight-bold">{{ $pet->nome }}</p>
+                                        <p class="card-text">{{ $pet->descricao }}</p>
+
+                                        @if($pet->limite_de_candidatos && $pet->limite_de_candidatos > 0)
+                                            <small class="text-muted">
+                                                Ainda restam: {{
+                                                $pet->limite_de_candidatos - count($pet->interessados)
+                                            }} vagas.
+                                            </small>
+                                        @endif
+                                    </div>
+                                    <div class="actions-dogs">
                                         <div class="btn-group">
                                             <!-- <button type="button" class="btn btn-sm btn-outline-secondary">
                                                 Detalhes
                                             </button> -->
                                             @if(!(Auth::user() && Auth::user()->tipo == 'ong'))
-                                            <a href="/pets/candidatar/{{$pet->id}}" class="btn btn-sm btn-outline-secondary">
-                                                Candidatar-se
+                                            <a href="/pets/candidatar/{{$pet->id}}" class="btn btn-sm btn-outline-primary">
+                                                QUERO ADOTAR
                                             </a>
                                             @endif
                                         </div>
-                                        <small class="text-muted">Limite: {{ $pet->limite_de_candidatos }}</small>
                                     </div>
                                 </div>
                             </div>
