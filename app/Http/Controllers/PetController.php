@@ -12,7 +12,7 @@ class PetController extends Controller
 {
     public function listByInteressado()
     {
-
+        $this->authorize('isInteressado');
         $pets = Pet::all();
         // buscando o interessado associado ao usuario
         $interessado = Auth::user()->interessado;
@@ -34,6 +34,7 @@ class PetController extends Controller
 
     public function listByOng()
     {
+        $this->authorize('isOng');
         $ong = Auth::user()->ong;
         $pets = Pet::where('ong_id', '=', $ong->id)->get();
         return view('listPetsOng', ['pets' => $pets]);
@@ -41,6 +42,7 @@ class PetController extends Controller
 
     public function insert(Request $request)
     {
+        $this->authorize('isOng');
         if ($request->method() == 'GET') {
             return view('formPet');
         }
@@ -79,16 +81,15 @@ class PetController extends Controller
     public function candidatar($pet_id)
     {
         // somente se for tipo interessado
-        if (Auth::user()->tipo == 'interessado') {
-            // buscando o interessado associado ao usuario
-            $interessado = Auth::user()->interessado;
+        $this->authorize('isInteressado');
+        // buscando o interessado associado ao usuario
+        $interessado = Auth::user()->interessado;
 
-            // salvando na  tabela a relacao de interesse
-            DB::table('interessados_pets')->insert([
-                'interessado_id' => $interessado->id,
-                'pet_id' => $pet_id
-            ]);
-        }
+        // salvando na  tabela a relacao de interesse
+        DB::table('interessados_pets')->insert([
+            'interessado_id' => $interessado->id,
+            'pet_id' => $pet_id
+        ]);
 
         return redirect('/interesses');
     }
