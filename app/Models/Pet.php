@@ -33,4 +33,9 @@ class Pet extends Model
     public function ong() {
         return $this->belongsTo("\App\Models\Ong");
     }
+
+    public function interessados()
+    {
+        return $this->belongsToMany('\App\Models\Interessado', 'interessados_pets');
+    }
 }

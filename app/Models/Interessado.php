@@ -35,4 +35,9 @@ class Interessado extends Model
     public function user() {
         return $this->belongsTo('\App\Models\User');
     }
+
+    public function interesses()
+    {
+        return $this->belongsToMany('\App\Models\Pet', 'interessados_pets');
+    }
 }
