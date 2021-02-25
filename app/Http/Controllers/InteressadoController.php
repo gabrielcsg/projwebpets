@@ -10,11 +10,11 @@ class InteressadoController extends Controller
     public function listAll() {
         $interessados = Interessado::all();
 
-        return view('listInteressados', ['interessados' => $interessados]);
+        return view('interessados/listInteressados', ['interessados' => $interessados]);
     }
     
     public function insert() {
-    	return view('formInteressado');
+    	return view('interessados/formInteressado');
     }
     
     public function create(Request $request) {

@@ -10,12 +10,12 @@ class OngController extends Controller
     public function listAll() {
         $ongs = Ong::all();
 
-        return view('listOngs', ['ongs' => $ongs]);
+        return view('ongs/listOngs', ['ongs' => $ongs]);
     }
 
     public function insert(Request $request) {
         if ($request->method() == 'GET') {
-            return view('formOng');
+            return view('ongs/formOng');
         }
         try {
             \App\Validator\OngValidator::validate($request->all());
