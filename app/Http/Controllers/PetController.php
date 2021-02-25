@@ -12,14 +12,14 @@ class PetController extends Controller
 {
     public function listByInteressado()
     {
-
+        $this->authorize('isInteressado');
         $pets = Pet::all();
         // buscando o interessado associado ao usuario
         $interessado = Auth::user()->interessado;
 
         // lista dos pets que se tem interesse
         $petsIds = DB::select("select distinct pet_id from interessados_pets where interessado_id=" . strval($interessado->id) . ";");
-        
+
         $petsInteressados = array();
         foreach ($pets as $pet) {
             foreach ($petsIds as $petId) {
@@ -32,7 +32,9 @@ class PetController extends Controller
         return view('listPetsInteressado', ['pets' => $petsInteressados]);
     }
 
-    public function listByOng() {
+    public function listByOng()
+    {
+        $this->authorize('isOng');
         $ong = Auth::user()->ong;
         $pets = Pet::where('ong_id', '=', $ong->id)->get();
         return view('listPetsOng', ['pets' => $pets]);
@@ -40,6 +42,7 @@ class PetController extends Controller
 
     public function insert(Request $request)
     {
+        $this->authorize('isOng');
         if ($request->method() == 'GET') {
             return view('formPet');
         }
@@ -69,6 +72,8 @@ class PetController extends Controller
     public function remove($id)
     {
         $pet = Pet::find($id);
+        $this->authorize('removePet', $pet);
+
         $pet->delete();
         return redirect('/pets');
     }
@@ -76,16 +81,15 @@ class PetController extends Controller
     public function candidatar($pet_id)
     {
         // somente se for tipo interessado
-        if (Auth::user()->tipo == 'interessado') {
-            // buscando o interessado associado ao usuario
-            $interessado = Auth::user()->interessado;
+        $this->authorize('isInteressado');
+        // buscando o interessado associado ao usuario
+        $interessado = Auth::user()->interessado;
 
-            // salvando na  tabela a relacao de interesse
-            DB::table('interessados_pets')->insert([
-                'interessado_id' => $interessado->id,
-                'pet_id' => $pet_id
-            ]);
-        }
+        // salvando na  tabela a relacao de interesse
+        DB::table('interessados_pets')->insert([
+            'interessado_id' => $interessado->id,
+            'pet_id' => $pet_id
+        ]);
 
         return redirect('/interesses');
     }
@@ -93,6 +97,9 @@ class PetController extends Controller
     public function retirarInteresse($pet_id)
     {
         $interessado = Auth::user()->interessado;
+        
+        $pet = Pet::find($pet_id);
+        $this->authorize('removerInteresse', $pet);
 
         DB::statement("delete from interessados_pets where pet_id=" . strval($pet_id) . " and  interessado_id=" . strval($interessado->id));
 
@@ -102,19 +109,20 @@ class PetController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            $pet = Pet::find($id);
+            $this->authorize('updatePet', $pet);
 
             if ($request->method() == 'GET') {
-                $pet = Pet::find($id);
                 return view('pets/formEditPet', ['pet' => $pet]);
             }
 
             PetValidator::validate($request->all());
-            $petAtualizado = Pet::find($id);
-            $petAtualizado->nome = $request['nome'];
-            $petAtualizado->descricao = $request['descricao'];
-            $petAtualizado->limite_de_candidatos = $request['limite_de_candidatos'];
+            $pet = Pet::find($id);
+            $pet->nome = $request['nome'];
+            $pet->descricao = $request['descricao'];
+            $pet->limite_de_candidatos = $request['limite_de_candidatos'];
 
-            $petAtualizado->update();
+            $pet->update();
 
             return redirect('/pets');
         } catch (\App\Validator\ValidationException $exception) {
@@ -125,6 +133,8 @@ class PetController extends Controller
     public function trocarDisponibilidade($id)
     {
         $pet = Pet::find($id);
+        $this->authorize('trocarDisponibilidade', $pet);
+
         $pet->disponivel = !$pet->disponivel;
         $pet->update();
 

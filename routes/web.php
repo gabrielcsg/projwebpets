@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
+Auth::routes();
+
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Ongs
@@ -16,39 +18,31 @@ Route::get('/ongs', [OngController::class, 'listAll']);
 Route::get('/ongs/cadastro', [OngController::class, 'insert'])->name('cadastro_ong');
 Route::post('/ongs/cadastro', [OngController::class, 'insert']);
 
-Route::get('/ongs/remover/{id}', [OngController::class, 'remove']);
-
-// Pets
-Route::get('/pets', [PetController::class, 'listByOng']);
-
-Route::get('/pets/cadastro', [PetController::class, 'insert']);
-Route::post('/pets/cadastro', [PetController::class, 'insert']);
-
-Route::get('/pets/remove/{id}', [PetController::class, 'remove']);
-
-// Interesse em um Pet
-Route::get('/pets/candidatar/{id}', [PetController::class, 'candidatar']);
-Route::get('/pets/retirarInteresse/{id}', [PetController::class, 'retirarInteresse']);
-Route::get('/interesses', [PetController::class, 'listByInteressado']);
-
-
-Route::get('/pets/editar/{id}', [PetController::class, 'update']);
-Route::post('/pets/editar/{id}', [PetController::class, 'update']);
-
-Route::get('/pets/disponibilidade/{id}', [PetController::class, 'trocarDisponibilidade']);
-
 // Interessados
-//Route::get('/interessados', [InteressadoController::class, 'listAll']);
-
+Route::get('/register', [InteressadoController::class, 'insert'])->name('register');
 Route::post('/interessados/cadastro', [InteressadoController::class, 'create']);
 
-// Enderecos
-//Route::get('/enderecos', [EnderecoController::class, 'listAll']);
+// Rotas protegidas
+Route::group(['middleware' => ['auth']], function () {
+    // Pets
+    Route::get('/pets', [PetController::class, 'listByOng']);
 
-Route::get('/enderecos/cadastro', [EnderecoController::class, 'insert']);
-Route::post('/enderecos/cadastro', [EnderecoController::class, 'create']);
+    Route::get('/pets/cadastro', [PetController::class, 'insert']);
+    Route::post('/pets/cadastro', [PetController::class, 'insert']);
 
+    Route::get('/pets/remove/{id}', [PetController::class, 'remove']);
 
-Auth::routes();
+    Route::get('/pets/editar/{id}', [PetController::class, 'update']);
+    Route::post('/pets/editar/{id}', [PetController::class, 'update']);
 
-Route::get('/register', [InteressadoController::class, 'insert'])->name('register');
+    Route::get('/pets/disponibilidade/{id}', [PetController::class, 'trocarDisponibilidade']);
+
+    // Interesse em um Pet
+    Route::get('/pets/candidatar/{id}', [PetController::class, 'candidatar']);
+    Route::get('/pets/retirarInteresse/{id}', [PetController::class, 'retirarInteresse']);
+    Route::get('/interesses', [PetController::class, 'listByInteressado']);
+
+    // Ongs
+    Route::get('/ongs/remover/{id}', [OngController::class, 'remove']);
+});
+
