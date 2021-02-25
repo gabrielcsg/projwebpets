@@ -10,11 +10,11 @@ class EnderecoController extends Controller
 {
 	public function listAll() {
 		$enderecos = Endereco::all();
-		return view('listEnderecos', ['enderecos' => $enderecos]);
+		return view('enderecos/listEnderecos', ['enderecos' => $enderecos]);
 	}
 
     public function insert() {
-    	return view('formEndereco');
+    	return view('enderecos/formEndereco');
     }
 
     public function create(Request $request) {
@@ -22,7 +22,7 @@ class EnderecoController extends Controller
 			EnderecoValidator::validate($request->all());
 			Endereco::create($request->all());
 			return redirect('/enderecos');
-		} catch (ValidationException $exception) {
+		} catch (\App\Validator\ValidationException $exception) {
 			return redirect('formEndereco')
 				->withErrors($exception->getValidator())
 				->withInput();
