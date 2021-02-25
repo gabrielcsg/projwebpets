@@ -12,8 +12,7 @@
     <a href="/ongs/cadastro">Cadastrar nova ONG</a>
     <ul>
         @foreach ($ongs as $ong)
-        <li>#{{ $ong->id }} - {{ $ong->nome_fantasia }} |
-            <a href="/ongs/remover/{{$ong->id}}">Excluir</a>
+        <li>#{{ $ong->id }} - {{ $ong->nome_fantasia }}
         </li>
         @endforeach
     </ul>

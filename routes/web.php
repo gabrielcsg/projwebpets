@@ -45,6 +45,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/interesses', [PetController::class, 'listByInteressado']);
 
     // Ongs
-    Route::get('/ongs/remover/{id}', [OngController::class, 'remove']);
+    //Route::get('/ongs/remover/{id}', [OngController::class, 'remove']);
 });
 
