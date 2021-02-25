@@ -13,6 +13,7 @@ class Interessado extends Model
         'nome', 
         'data_nascimento', 
         'telefone',
+        'endereco_id',
         'user_id'
     ];
 
