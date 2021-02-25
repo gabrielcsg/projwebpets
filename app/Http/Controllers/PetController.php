@@ -19,7 +19,7 @@ class PetController extends Controller
 
         // lista dos pets que se tem interesse
         $petsIds = DB::select("select distinct pet_id from interessados_pets where interessado_id=" . strval($interessado->id) . ";");
-        
+
         $petsInteressados = array();
         foreach ($pets as $pet) {
             foreach ($petsIds as $petId) {
@@ -32,7 +32,8 @@ class PetController extends Controller
         return view('listPetsInteressado', ['pets' => $petsInteressados]);
     }
 
-    public function listByOng() {
+    public function listByOng()
+    {
         $ong = Auth::user()->ong;
         $pets = Pet::where('ong_id', '=', $ong->id)->get();
         return view('listPetsOng', ['pets' => $pets]);
@@ -69,6 +70,8 @@ class PetController extends Controller
     public function remove($id)
     {
         $pet = Pet::find($id);
+        $this->authorize('removePet', $pet);
+
         $pet->delete();
         return redirect('/pets');
     }
@@ -102,19 +105,20 @@ class PetController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            $pet = Pet::find($id);
+            $this->authorize('updatePet', $pet);
 
             if ($request->method() == 'GET') {
-                $pet = Pet::find($id);
                 return view('pets/formEditPet', ['pet' => $pet]);
             }
 
             PetValidator::validate($request->all());
-            $petAtualizado = Pet::find($id);
-            $petAtualizado->nome = $request['nome'];
-            $petAtualizado->descricao = $request['descricao'];
-            $petAtualizado->limite_de_candidatos = $request['limite_de_candidatos'];
+            $pet = Pet::find($id);
+            $pet->nome = $request['nome'];
+            $pet->descricao = $request['descricao'];
+            $pet->limite_de_candidatos = $request['limite_de_candidatos'];
 
-            $petAtualizado->update();
+            $pet->update();
 
             return redirect('/pets');
         } catch (\App\Validator\ValidationException $exception) {
@@ -125,6 +129,8 @@ class PetController extends Controller
     public function trocarDisponibilidade($id)
     {
         $pet = Pet::find($id);
+        $this->authorize('trocarDisponibilidade', $pet);
+
         $pet->disponivel = !$pet->disponivel;
         $pet->update();
 
