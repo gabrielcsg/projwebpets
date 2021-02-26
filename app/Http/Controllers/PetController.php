@@ -152,4 +152,17 @@ class PetController extends Controller
             'interessados' => $interessados
         ]);
     }
+
+    public function aceitarSolicitacao($pet_id, $interessado_id)
+    {
+        $pet = Pet::find($pet_id);
+        $this->authorize('aceitarSolicitacao', $pet);
+
+        $pet->disponivel = false;
+        $pet->dono_id = $interessado_id;
+
+        $pet->update();
+
+        return redirect('/pets');
+    }
 }

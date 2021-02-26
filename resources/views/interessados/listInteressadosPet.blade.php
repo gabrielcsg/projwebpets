@@ -35,12 +35,12 @@
                             <div class="card-body card-interessados">
                                 <p class="card-title font-weight-bold">{{ $interessado->nome }}</p>
                                 <p class="card-text">
-                                    Email: {{ $interessado->user->email }} <br/>
+                                    Email: {{ $interessado->user->email }} <br />
                                     Contato: {{ $interessado->telefone }}
                                 </p>
                                 <div class="d-flex justify-content-end align-items-center">
                                     <div class="btn-group">
-                                    <a href="" class="btn btn-sm btn-primary">
+                                        <a href="/pets/{{$pet->id}}/interessados/aceitar/{{$interessado->id}}" class="btn btn-sm btn-primary">
                                             Aceitar
                                         </a>
                                     </div>
@@ -53,4 +53,5 @@
             </div>
         </ul>
     </div>
-    @endsection
+</div>
+@endsection

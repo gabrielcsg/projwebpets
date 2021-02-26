@@ -56,4 +56,9 @@ class PetPolicy
     {
         return $user->tipo == 'ong' && $user->ong->id == $pet->ong_id;
     }
+
+    public function aceitarSolicitacao(User $user, Pet $pet)
+    {
+        return $user->tipo == 'ong' && $user->ong->id == $pet->ong_id;
+    }
 }
