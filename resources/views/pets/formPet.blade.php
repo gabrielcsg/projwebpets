@@ -60,7 +60,7 @@
                                 </a>
                             </div>
                             <div class="col-4 col-sm-2">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" name="confirmar" id="confirmar">
                                     {{ __('Confirmar') }}
                                 </button>
                             </div>
