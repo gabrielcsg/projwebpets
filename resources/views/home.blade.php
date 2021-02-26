@@ -118,7 +118,7 @@
                                                 Detalhes
                                             </button> -->
                                             @if(!(Auth::user() && Auth::user()->tipo == 'ong'))
-                                            <a href="/pets/candidatar/{{$pet->id}}" class="btn btn-sm btn-outline-primary">
+                                            <a href="/pets/candidatar/{{$pet->id}}" class="btn btn-sm btn-outline-primary" id="adotar{{$pet->id}}" name="adotar{{$pet->id}}">
                                                 QUERO ADOTAR
                                             </a>
                                             @endif
