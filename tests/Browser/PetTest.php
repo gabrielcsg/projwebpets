@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\DuskTestCase;
 use App\Models\User;
+use App\Models\Ong;
 use App\Models\Pet;
 
 class PetTest extends DuskTestCase
@@ -29,5 +30,29 @@ class PetTest extends DuskTestCase
                 ->press('confirmar')   
                 ->pause(2000);     
         }); 
+    }
+    
+    
+    public function testAdotarPet()
+    {
+        $this->browse(function ($browser) {
+            $interessado = User::where('tipo','=','interessado')->first();
+            $ong = Ong::where('id','=','1')->first()->user;
+            $pet = Pet::where('ong_id','=','1')->first();            
+            
+            $browser->loginAs($interessado)
+                ->visit('/')->assertPathIs('/')
+                ->pause(1000)
+                ->press('#adotar' . strval($pet->id))
+                ->pause(2000);
+                
+            $browser->loginAs($ong)
+                ->visit('/pets')->assertPathIs('/pets')
+                ->pause('2000')
+                ->press('#candidatos' . strval($pet->id))
+                ->pause('2000')
+                ->press('#aceitar' . strval($interessado->id))
+                ->pause('2000');
+        });
     }
 }

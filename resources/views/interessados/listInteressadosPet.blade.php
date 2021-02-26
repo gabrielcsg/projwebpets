@@ -40,7 +40,7 @@
                                 </p>
                                 <div class="d-flex justify-content-end align-items-center">
                                     <div class="btn-group">
-                                        <a href="/pets/{{$pet->id}}/interessados/aceitar/{{$interessado->id}}" class="btn btn-sm btn-primary">
+                                        <a href="/pets/{{$pet->id}}/interessados/aceitar/{{$interessado->id}}" class="btn btn-sm btn-primary" id="aceitar{{$interessado->id}}" name="aceitar{{$interessado->id}}">
                                             Aceitar
                                         </a>
                                     </div>

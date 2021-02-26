@@ -127,7 +127,7 @@
                                             Editar
                                         </a>
 
-                                        <a href="/pets/{{$pet->id}}/interessados" class="btn btn-sm btn-outline-primary">
+                                        <a href="/pets/{{$pet->id}}/interessados" class="btn btn-sm btn-outline-primary" id="candidatos{{$pet->id}}" name="candidatos{{$pet->id}}">
                                             Candidatos
                                         </a>
                                     </div>
