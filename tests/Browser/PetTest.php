@@ -24,9 +24,13 @@ class PetTest extends DuskTestCase
                 ->visit('/pets')
                 ->pause(3000)
                 ->visit('/pets/cadastro')->assertPathIs('/pets/cadastro')
+                ->pause(3000)
                 ->type('nome', "Cãozinho")
+                ->pause(1000)
                 ->type('descricao', "Um cão pequeno")
+                ->pause(1000)
                 ->type('limite_de_candidatos', "4")
+                ->pause(1000)
                 ->press('confirmar')   
                 ->pause(2000);     
         }); 
@@ -42,7 +46,7 @@ class PetTest extends DuskTestCase
             
             $browser->loginAs($interessado)
                 ->visit('/')->assertPathIs('/')
-                ->pause(1000)
+                ->pause(2000)
                 ->press('#adotar' . strval($pet->id))
                 ->pause(2000);
                 
