@@ -36,6 +36,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/pets/editar/{id}', [PetController::class, 'update']);
 
     Route::get('/pets/{pet_id}/interessados', [PetController::class, 'listInteressados']);
+    Route::get('/pets/{pet_id}/interessados/aceitar/{interessado_id}', [PetController::class, 'aceitarSolicitacao']);
 
     Route::get('/pets/disponibilidade/{id}', [PetController::class, 'trocarDisponibilidade']);
 
@@ -47,4 +48,3 @@ Route::group(['middleware' => ['auth']], function () {
     // Ongs
     Route::get('/ongs/remover/{id}', [OngController::class, 'remove']);
 });
-

@@ -116,6 +116,11 @@
                                         </small>
                                     </div>
                                 </div>
+                                @if($pet->dono_id != null)
+                                <div class="alert alert-warning" role="alert">
+                                    Esse pet já está adotado!
+                                </div>
+                                @endif
                                 <div class="actions-dogs">
                                     <div class="btn-group">
                                         <a href="/pets/editar/{{$pet->id}}" class="btn btn-sm btn-outline-primary">
