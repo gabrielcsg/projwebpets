@@ -35,9 +35,10 @@ class HomeController extends Controller
             $pets_filtrados = array();
             
             foreach($ongs_all as $ong) {
-                if ($estado == $ong->endereco->estado and $cidade == $ong->endereco->cidade) {
+                #if ($estado == $ong->endereco->estado and $cidade == $ong->endereco->cidade) {
+                if (($estado == $ong->endereco->estado and $cidade == $ong->endereco->cidade) or ($estado == $ong->endereco->estado and $cidade == 'null') or ($estado == 'null' and $cidade == $ong->endereco->cidade)) {
                     array_push($ongs_id, $ong->id);
-                }
+                } 
             }
             
             foreach ($pets as $pet) {
