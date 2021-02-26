@@ -66,12 +66,24 @@
     <div class="row justify-content-center">
         <div class="col-sm-12">
             <div class="card">
-                <div class="card-header">{{ __('Buscar') }}</div>
+                <div class="card-header">{{ __('Filtrar por região') }}</div>
                 <div class="card-body">
-                    <form action="">
+                    <form action="/" method="POST">
                         <div class="form-group row">
+                            @csrf
                             <div class="col-12 col-md-10">
-                                <input placeholder="Insira algo aqui" type="text" class="form-control" name="algo" required />
+                                <select name="select_estado" id="select_estado">
+                                    <option value='null'> Estado </option>
+                                    @foreach ($estados as $estado)
+                                        <option value="{{ $estado }}"> {{ $estado }} </option>
+                                    @endforeach
+                                </select>
+                                <select name="select_cidade" id="select_cidade">
+                                    <option value='null'> Cidade </option>
+                                    @foreach ($cidades as $cidade)
+                                        <option value="{{ $cidade }}"> {{ $cidade }} </option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-12 col-md-2">
                                 <button class="btn btn-primary btn-full-witdh" type="submit">Buscar</button>
