@@ -15,7 +15,8 @@ class Pet extends Model
         'ong_id',
         'limite_de_candidatos',
         'disponivel',
-        'data_adocao'
+        'data_adocao',
+        'dono_id',
     ];
 
     public static $rules = [
@@ -30,12 +31,18 @@ class Pet extends Model
         'ong_id.required' => 'A ong é obrigatória',
     ];
 
-    public function ong() {
+    public function ong()
+    {
         return $this->belongsTo("\App\Models\Ong");
     }
 
     public function interessados()
     {
         return $this->belongsToMany('\App\Models\Interessado', 'interessados_pets');
+    }
+
+    public function dono()
+    {
+        return $this->belongsTo("\App\Models\Interessado", "dono_id");
     }
 }
